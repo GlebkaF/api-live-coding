@@ -12,12 +12,26 @@ import { addTodo, deleteTodo, getTodos } from "./api.js";
 import { renderLoginComponent } from "./components/login-component.js";
 let tasks = [];
 
-let token = "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
+let user = null;
 
-token = null;
+// user = {
+//   _id: "6421860c32e0301869fb3301",
+//   login: "admin",
+//   name: "Глеб Админ",
+//   password: "admin",
+//   token: "asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k",
+// };
+
+// "Bearer asb4c4boc86gasb4c4boc86g37k3bk3cg3c03ck3k37w3cc3bo3b8";
+// user = null;
+
+let showAddPost = false;
+
+// 'main' | 'auth' | 'aasd'
+let page = "main";
 
 const fetchTodosAndRender = () => {
-  return getTodos({ token }).then((responseData) => {
+  return getTodos({ token: `Bearer ${user.token}` }).then((responseData) => {
     tasks = responseData.todos;
     renderApp();
   });
@@ -25,36 +39,118 @@ const fetchTodosAndRender = () => {
 
 const renderApp = () => {
   const appEl = document.getElementById("app");
-  if (!token) {
+  if (page === "auth") {
     renderLoginComponent({
       appEl,
-      setToken: (newToken) => {
-        token = newToken;
+      setUser: (newToken) => {
+        user = newToken;
+        page = "main";
+        renderApp();
       },
-      fetchTodosAndRender,
+      renderApp,
     });
 
     return;
   }
 
-  const tasksHtml = tasks
-    .map((task) => {
+  const src = "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg";
+
+  const posts = [
+    {
+      id: "1111",
+      imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
+      text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
+      createdAt: new Date("2023-01-02T08:19:00.916Z"),
+      likes: [
+        {
+          name: "Костя",
+          login: "kv",
+        },
+        {
+          name: "Анна",
+          login: "ap",
+        },
+        {
+          name: "Глеб Админ",
+          login: "admin",
+        },
+      ],
+      user: {
+        id: "gf",
+        name: "Глеб Админ",
+        imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
+      },
+    },
+    {
+      id: "2222",
+      imageUrl:
+        "https://m.buro247.ru/images/senina/aiony-haust-3TLl_97HNJo-unspl.jpg",
+      text: "Это кто-то",
+      createdAt: new Date("2022-01-02T08:19:00.916Z"),
+      likes: [
+        {
+          name: "Костя",
+          login: "kv",
+        },
+        {
+          name: "Анна",
+          login: "ap",
+        },
+      ],
+      user: {
+        id: "ap",
+        name: "Анна Полунина",
+        imageUrl:
+          "https://pbs.twimg.com/profile_images/2661781934/f18184b33821c97cb91af47497091c86_400x400.jpeg",
+      },
+    },
+  ];
+
+  const tasksHtml = posts
+    .map((post) => {
       return `
-          <li class="task">
-            <p class="task-text">
-              ${task.text} (Создал: ${task.user?.name ?? "Неизвестно"})
-              <button data-id="${
-                task.id
-              }" class="button delete-button">Удалить</button>
+          <li class="post">
+            <div class="post-header" data-user-id="${post.user.id}">
+                <img src="${
+                  post.user.imageUrl
+                }" class="post-header__user-image">
+                <p class="post-header__user-name">${post.user.name}</p>
+            </div>
+            <div class="post-image-container">
+              <img class="post-image" src="${post.imageUrl}">
+            </div>
+            <div class="post-likes">
+              <button data-post-id="${post.id}" class="like-button ${
+        post.likes.some((like) => like.login === user?.login) ? "-active" : ""
+      }"> Лайк </button>
+              <p class="post-likes-text">
+                Нравится: ${post.likes.length}
+              </p>
+            </div>
+            <p class="post-text">
+              <span class="user-name">${post.user.name}</span>
+              ${post.text}
+            </p>
+            <p class="post-date">
+              ${post.createdAt.toLocaleString()}
             </p>
           </li>`;
     })
     .join("");
 
   const appHtml = `
-                <h1>Список задач</h1>
+              <div class="page-container">
+                <div class="page-header">
+                  <h1 class="logo">Instapro</h1>
+                  <button class="header-button">
+                  ${user ? `Добавить пост (${user.name})` : "Войти"}
+                  </button>
+                  
+                  
+                </div>
 
-                <ul class="tasks" id="list">
+                <ul class="posts">
                 <!-- Список рендерится из JS -->
                 ${tasksHtml}
                 </ul>
@@ -72,64 +168,36 @@ const renderApp = () => {
                 </div>
                 <br />
                 <button class="button" id="add-button">Добавить</button>
-                </div>`;
+                </div>
+              </div>`;
 
   appEl.innerHTML = appHtml;
 
-  const buttonElement = document.getElementById("add-button");
-  const listElement = document.getElementById("list");
-  const textInputElement = document.getElementById("text-input");
+  appEl.querySelector(".header-button").addEventListener("click", () => {
+    if (user) {
+      alert("Идем добавлять пост");
+    } else {
+      page = "auth";
+      renderApp();
+    }
+  });
 
-  const deleteButtons = document.querySelectorAll(".delete-button");
-
-  for (const deleteButton of deleteButtons) {
-    deleteButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-
-      const id = deleteButton.dataset.id;
-
-      // подписываемся на успешное завершение запроса с помощью then
-      deleteTodo({
-        id,
-        token,
-      }).then((responseData) => {
-        // получили данные и рендерим их в приложении
-        tasks = responseData.todos;
-        renderApp();
-      });
+  for (let userEl of document.querySelectorAll(".post-header")) {
+    userEl.addEventListener("click", () => {
+      alert("Клик по юзеру: " + userEl.dataset.userId);
     });
   }
 
-  buttonElement.addEventListener("click", () => {
-    if (textInputElement.value === "") {
-      return;
-    }
-
-    buttonElement.disabled = true;
-    buttonElement.textContent = "Задача добавляеятся...";
-
-    addTodo({
-      text: textInputElement.value,
-      token,
-    })
-      .then(() => {
-        // TODO: кинуть исключение
-        textInputElement.value = "";
-      })
-      .then(() => {
-        return fetchTodosAndRender();
-      })
-      .then(() => {
-        buttonElement.disabled = false;
-        buttonElement.textContent = "Добавить";
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Кажется у вас проблемы с интернетом, попробуйте позже");
-        buttonElement.disabled = false;
-        buttonElement.textContent = "Добавить";
-      });
-  });
+  for (let likeEl of document.querySelectorAll(".like-button")) {
+    likeEl.addEventListener("click", () => {
+      console.log(likeEl.dataset);
+      alert("Клик по лайку " + likeEl.dataset.postId);
+    });
+  }
 };
 
-renderApp();
+if (!user) {
+  renderApp();
+} else {
+  renderApp();
+}

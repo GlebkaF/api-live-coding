@@ -1,13 +1,14 @@
 import { loginUser, registerUser } from "../api.js";
 
-export function renderLoginComponent({ appEl, setToken, fetchTodosAndRender }) {
+export function renderLoginComponent({ appEl, setUser }) {
   let isLoginMode = true;
 
   const renderForm = () => {
     const appHtml = `
-    <h1>Список задач</h1>
     <div class="form">
-    <h3 class="form-title">Форма ${isLoginMode ? "входа" : "регистрации"}</h3>
+    <h3 class="form-title">
+     ${isLoginMode ? "Войти в Instapro" : "Зарегистрироваться в Instapro"}
+     </h3>
     <div class="form-row">
       ${
         isLoginMode
@@ -58,8 +59,7 @@ export function renderLoginComponent({ appEl, setToken, fetchTodosAndRender }) {
           password: password,
         })
           .then((user) => {
-            setToken(`Bearer ${user.user.token}`);
-            fetchTodosAndRender();
+            setUser(user.user);
           })
           .catch((error) => {
             // TODO: Выводить алерт красиво
@@ -89,7 +89,7 @@ export function renderLoginComponent({ appEl, setToken, fetchTodosAndRender }) {
           name: name,
         })
           .then((user) => {
-            setToken(`Bearer ${user.user.token}`);
+            setUser(`Bearer ${user.user.token}`);
             fetchTodosAndRender();
           })
           .catch((error) => {
