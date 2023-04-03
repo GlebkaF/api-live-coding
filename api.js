@@ -1,18 +1,150 @@
-const host = "https://webdev-hw-api.vercel.app/api/v2/todos";
+const host = "https://webdev-hw-api.vercel.app/api/v2/comments/";
 
-export function getTodos({ token }) {
-  return fetch(host, {
+const baseHost = "https://webdev-hw-api.vercel.app";
+const commentsHost = baseHost + "/api/v2/gleb-fokin";
+
+export function getPosts({ token }) {
+  return fetch(commentsHost + "/comments", {
     method: "GET",
     headers: {
       Authorization: token,
     },
-  }).then((response) => {
-    if (response.status === 401) {
-      throw new Error("Нет авторизации");
-    }
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
 
-    return response.json();
-  });
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      const posts = [
+        {
+          id: "1111",
+          imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
+          text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
+          createdAt: new Date("2023-01-02T08:19:00.916Z"),
+          likes: [
+            {
+              name: "Костя",
+              login: "kv",
+            },
+            {
+              name: "Анна",
+              login: "ap",
+            },
+            {
+              name: "Глеб Админ",
+              login: "admin",
+            },
+          ],
+          user: {
+            id: "gf",
+            name: "Глеб Админ",
+            imageUrl:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
+          },
+        },
+        {
+          id: "2222",
+          imageUrl:
+            "https://m.buro247.ru/images/senina/aiony-haust-3TLl_97HNJo-unspl.jpg",
+          text: "Это кто-то",
+          createdAt: new Date("2022-01-02T08:19:00.916Z"),
+          likes: [
+            {
+              name: "Костя",
+              login: "kv",
+            },
+            {
+              name: "Анна",
+              login: "ap",
+            },
+          ],
+          user: {
+            id: "ap",
+            name: "Анна Полунина",
+            imageUrl:
+              "https://pbs.twimg.com/profile_images/2661781934/f18184b33821c97cb91af47497091c86_400x400.jpeg",
+          },
+        },
+      ];
+      return posts;
+    });
+}
+
+export function getUserPosts({ token, userId }) {
+  return fetch(commentsHost + "/comments", {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      const posts = [
+        {
+          id: "1111",
+          imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
+          text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
+          createdAt: new Date("2023-01-02T08:19:00.916Z"),
+          likes: [
+            {
+              name: "Костя",
+              login: "kv",
+            },
+            {
+              name: "Анна",
+              login: "ap",
+            },
+            {
+              name: "Глеб Админ",
+              login: "admin",
+            },
+          ],
+          user: {
+            id: "gf",
+            name: "Глеб Админ",
+            imageUrl:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
+          },
+        },
+        {
+          id: "11112",
+          imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
+          text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
+          createdAt: new Date("2023-01-02T08:19:00.916Z"),
+          likes: [
+            {
+              name: "Костя",
+              login: "kv",
+            },
+            {
+              name: "Анна",
+              login: "ap",
+            },
+            {
+              name: "Глеб Админ",
+              login: "admin",
+            },
+          ],
+          user: {
+            id: "gf",
+            name: "Глеб Админ",
+            imageUrl:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
+          },
+        },
+      ];
+      return posts;
+    });
 }
 
 export function deleteTodo({ token, id }) {

@@ -1,10 +1,13 @@
 import { loginUser, registerUser } from "../api.js";
+import { renderHeaderComponent } from "./header-component.js";
 
-export function renderLoginComponent({ appEl, setUser }) {
+export function renderAuthPageComponent({ appEl, setUser, user, goToPage }) {
   let isLoginMode = true;
 
   const renderForm = () => {
     const appHtml = `
+<div class="page-container">
+    <div class="header-container"></div>
     <div class="form">
     <h3 class="form-title">
      ${isLoginMode ? "Войти в Instapro" : "Зарегистрироваться в Instapro"}
@@ -35,9 +38,16 @@ export function renderLoginComponent({ appEl, setUser }) {
       isLoginMode ? "к регистрации" : "ко входу"
     }</button>
     </div>
+</div>    
 `;
 
     appEl.innerHTML = appHtml;
+
+    renderHeaderComponent({
+      element: document.querySelector(".header-container"),
+      user,
+      goToPage,
+    });
 
     document.getElementById("login-button").addEventListener("click", () => {
       if (isLoginMode) {
