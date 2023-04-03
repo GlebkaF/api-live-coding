@@ -13,13 +13,13 @@ import { renderLoadingPageComponent } from "./components/loading-page-component.
 
 let user = null;
 
-user = {
-  _id: "6421860c32e0301869fb3301",
-  login: "admin",
-  name: "Глеб Админ",
-  password: "admin",
-  token: "asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k",
-};
+// user = {
+//   _id: "6421860c32e0301869fb3301",
+//   login: "admin",
+//   name: "Глеб Админ",
+//   password: "admin",
+//   token: "asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k",
+// };
 
 let page = POSTS_PAGE;
 let posts = [];

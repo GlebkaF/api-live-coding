@@ -17,58 +17,6 @@ export function getPosts({ token }) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
-      const posts = [
-        {
-          id: "1111",
-          imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
-          text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
-          createdAt: new Date("2023-01-02T08:19:00.916Z"),
-          likes: [
-            {
-              name: "Костя",
-              login: "kv",
-            },
-            {
-              name: "Анна",
-              login: "ap",
-            },
-            {
-              name: "Глеб Админ",
-              login: "admin",
-            },
-          ],
-          user: {
-            id: "gf",
-            name: "Глеб Админ",
-            imageUrl:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
-          },
-        },
-        {
-          id: "2222",
-          imageUrl:
-            "https://m.buro247.ru/images/senina/aiony-haust-3TLl_97HNJo-unspl.jpg",
-          text: "Это кто-то",
-          createdAt: new Date("2022-01-02T08:19:00.916Z"),
-          likes: [
-            {
-              name: "Костя",
-              login: "kv",
-            },
-            {
-              name: "Анна",
-              login: "ap",
-            },
-          ],
-          user: {
-            id: "ap",
-            name: "Анна Полунина",
-            imageUrl:
-              "https://pbs.twimg.com/profile_images/2661781934/f18184b33821c97cb91af47497091c86_400x400.jpeg",
-          },
-        },
-      ];
       return data.comments.map((comment) => {
         return {
           id: comment.id,
@@ -191,18 +139,14 @@ export function loginUser({ login, password }) {
   });
 }
 
-export function postImage({ file }) {
+export function uploadImage({ file }) {
   const data = new FormData();
   data.append("file", file);
 
-  return fetch(baseHost + "/api/image", {
+  return fetch(baseHost + "/api/upload/image", {
     method: "POST",
     body: data,
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-    });
+  }).then((response) => {
+    return response.json();
+  });
 }

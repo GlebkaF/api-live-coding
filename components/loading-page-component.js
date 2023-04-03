@@ -6,7 +6,7 @@ export function renderLoadingPageComponent({ appEl, user, goToPage }) {
               <div class="page-container">
                 <div class="header-container"></div>
                 <div class="loading-page">
-                  <div class="lds-facebook"><div></div><div></div><div></div></div>
+                  <div class="loader"><div></div><div></div><div></div></div>
                 </div>
               </div>`;
 

@@ -1,170 +1,120 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif
-}
-
-p {
-    margin: 0;
-}
-
 .page-container {
-    padding: 0 20px;
+  padding: 0 20px;
 }
 
 .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .logo {
-    margin: 0;
-    font-size: 32px;
-    cursor: pointer;
+  margin: 0;
+  font-size: 32px;
+  cursor: pointer;
 }
 
 .header-button {
-    padding: 0;
-    border: none;
-    background-color: transparent;
-    font-size: 16px;
-    cursor: pointer;
-    font-size: 18px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  font-size: 18px;
 }
 
 .posts {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .post-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 5px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
 .post-header__user-image {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 40px;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 40px;
+  margin-right: 10px;
 }
 
 .post-image-container {
-    height: 500px;
+  height: 500px;
 }
 
 .post-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .post-likes {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .like-button {
-    padding: 10px;
-    border: none;
-    background-color: transparent;
-    border: 2px solid red;
-    margin-right: 10px;
-    cursor: pointer;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  border: 2px solid red;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .-active {
-    background-color: red;
+  background-color: red;
 }
 
 .user-name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .post-text {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .post-date {
-    color: darkgray;
+  color: darkgray;
 }
 
 .post + .post {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-
 .posts-user-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .posts-user-header__user-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 40px;
-    margin-right: 10px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 40px;
+  margin-right: 10px;
 }
 
 .posts-user-header__user-name {
-    font-size: 24px;
+  font-size: 24px;
 }
-
 
 .loading-page {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
-
-.lds-facebook {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-  }
-.lds-facebook div {
-display: inline-block;
-position: absolute;
-left: 8px;
-width: 16px;
-background: #000;
-animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-}
-.lds-facebook div:nth-child(1) {
-left: 8px;
-animation-delay: -0.24s;
-}
-.lds-facebook div:nth-child(2) {
-left: 32px;
-animation-delay: -0.12s;
-}
-.lds-facebook div:nth-child(3) {
-left: 56px;
-animation-delay: 0;
-}
-@keyframes lds-facebook {
-0% {
-    top: 8px;
-    height: 64px;
-}
-50%, 100% {
-    top: 24px;
-    height: 32px;
-}
-}
-  
