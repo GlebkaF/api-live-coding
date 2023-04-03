@@ -1,6 +1,5 @@
-const host = "https://webdev-hw-api.vercel.app/api/v2/comments/";
-
-const baseHost = "https://webdev-hw-api.vercel.app";
+const baseHost = "http://localhost:3000";
+// const baseHost = "https://webdev-hw-api.vercel.app";
 const commentsHost = baseHost + "/api/v2/gleb-fokin";
 
 export function getPosts({ token }) {
@@ -162,7 +161,7 @@ export function toogleLike({ id, token }) {
 
 // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
 export function registerUser({ login, password, name }) {
-  return fetch("https://webdev-hw-api.vercel.app/api/user", {
+  return fetch(baseHost + "/api/user", {
     method: "POST",
     body: JSON.stringify({
       login,
@@ -178,7 +177,7 @@ export function registerUser({ login, password, name }) {
 }
 
 export function loginUser({ login, password }) {
-  return fetch("https://webdev-hw-api.vercel.app/api/user/login", {
+  return fetch(baseHost + "/api/user/login", {
     method: "POST",
     body: JSON.stringify({
       login,
@@ -190,4 +189,20 @@ export function loginUser({ login, password }) {
     }
     return response.json();
   });
+}
+
+export function postImage({ file }) {
+  const data = new FormData();
+  data.append("file", file);
+
+  return fetch(baseHost + "/api/image", {
+    method: "POST",
+    body: data,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    });
 }
