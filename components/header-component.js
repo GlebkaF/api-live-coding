@@ -1,24 +1,18 @@
-import { ADD_POSTS_PAGE, AUTH_PAGE, POSTS_PAGE } from "../routes.js";
+import { ADD_POSTS_PAGE, POSTS_PAGE } from "../routes.js";
 
-export function renderHeaderComponent({ element, user, goToPage }) {
+export function renderHeaderComponent({ element, goToPage }) {
   element.innerHTML = `
   <div class="page-header">
-      <h1 class="logo">Instapro</h1>
-      <button class="header-button">
-      ${user ? `Добавить пост (${user.name})` : "Войти"}
-      </button>
+      <button class="to-main-page">На главную</button>
+      <button class="add-post">Добавить пост</button>
   </div>
 `;
 
-  element.querySelector(".header-button").addEventListener("click", () => {
-    if (user) {
-      goToPage(ADD_POSTS_PAGE);
-    } else {
-      goToPage(AUTH_PAGE);
-    }
+  element.querySelector(".to-main-page").addEventListener("click", () => {
+    goToPage(POSTS_PAGE);
   });
 
-  element.querySelector(".logo").addEventListener("click", () => {
-    goToPage(POSTS_PAGE);
+  element.querySelector(".add-post").addEventListener("click", () => {
+    goToPage(ADD_POSTS_PAGE);
   });
 }

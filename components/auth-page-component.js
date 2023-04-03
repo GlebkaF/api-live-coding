@@ -99,8 +99,7 @@ export function renderAuthPageComponent({ appEl, setUser, user, goToPage }) {
           name: name,
         })
           .then((user) => {
-            setUser(`Bearer ${user.user.token}`);
-            fetchTodosAndRender();
+            setUser(user.user);
           })
           .catch((error) => {
             // TODO: Выводить алерт красиво
