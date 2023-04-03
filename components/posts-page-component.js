@@ -7,6 +7,7 @@ export function renderPostsPageComponent({
   user,
   goToPage,
   singleUserView,
+  toggleLike,
 }) {
   const tasksHtml = posts
     .map((post) => {
@@ -28,10 +29,10 @@ export function renderPostsPageComponent({
             </div>
             <div class="post-likes">
               <button data-post-id="${post.id}" class="like-button ${
-        post.likes.some((like) => like.login === user?.login) ? "-active" : ""
+        post.isLiked ? "-active" : ""
       }"> Лайк </button>
               <p class="post-likes-text">
-                Нравится: ${post.likes.length}
+                Нравится: ${post.likes}
               </p>
             </div>
             <p class="post-text">
@@ -39,7 +40,7 @@ export function renderPostsPageComponent({
               ${post.text}
             </p>
             <p class="post-date">
-              ${post.createdAt.toLocaleString()}
+              ${new Date(post.createdAt).toLocaleString()}
             </p>
           </li>`;
     })
@@ -87,8 +88,7 @@ export function renderPostsPageComponent({
 
   for (let likeEl of document.querySelectorAll(".like-button")) {
     likeEl.addEventListener("click", () => {
-      console.log(likeEl.dataset);
-      alert("Клик по лайку " + likeEl.dataset.postId);
+      toggleLike({ postId: likeEl.dataset.postId });
     });
   }
 }

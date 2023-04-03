@@ -110,7 +110,6 @@ p {
     flex-direction: row;
     align-items: center;
     margin-bottom: 25px;
-    cursor: pointer;
 }
 
 .posts-user-header__user-image {

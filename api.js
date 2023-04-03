@@ -70,7 +70,22 @@ export function getPosts({ token }) {
           },
         },
       ];
-      return posts;
+      return data.comments.map((comment) => {
+        return {
+          id: comment.id,
+          imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
+          text: comment.text,
+          createdAt: comment.date,
+          likes: comment.likes,
+          isLiked: comment.isLiked,
+          user: {
+            id: "gf",
+            name: comment.author.name,
+            imageUrl:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
+          },
+        };
+      });
     });
 }
 
@@ -89,77 +104,27 @@ export function getUserPosts({ token, userId }) {
       return response.json();
     })
     .then((data) => {
-      const posts = [
-        {
-          id: "1111",
+      return data.comments.map((comment) => {
+        return {
+          id: comment.id,
           imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
-          text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
-          createdAt: new Date("2023-01-02T08:19:00.916Z"),
-          likes: [
-            {
-              name: "Костя",
-              login: "kv",
-            },
-            {
-              name: "Анна",
-              login: "ap",
-            },
-            {
-              name: "Глеб Админ",
-              login: "admin",
-            },
-          ],
+          text: comment.text,
+          createdAt: comment.date,
+          likes: comment.likes,
+          isLiked: comment.isLiked,
           user: {
             id: "gf",
-            name: "Глеб Админ",
+            name: comment.author.name,
             imageUrl:
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
           },
-        },
-        {
-          id: "11112",
-          imageUrl: "https://99px.ru/sstorage/53/2020/11/tmb_317517_518911.jpg",
-          text: "Это я, сижу и пью чай в пышечной в Новосибисрке",
-          createdAt: new Date("2023-01-02T08:19:00.916Z"),
-          likes: [
-            {
-              name: "Костя",
-              login: "kv",
-            },
-            {
-              name: "Анна",
-              login: "ap",
-            },
-            {
-              name: "Глеб Админ",
-              login: "admin",
-            },
-          ],
-          user: {
-            id: "gf",
-            name: "Глеб Админ",
-            imageUrl:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLBU1pvapd3uB42CStKcS-yZmCrmrC_XSgUDrSYRS5Rw&s",
-          },
-        },
-      ];
-      return posts;
+        };
+      });
     });
 }
 
-export function deleteTodo({ token, id }) {
-  return fetch("https://webdev-hw-api.vercel.app/api/todos/" + id, {
-    method: "DELETE",
-    headers: {
-      Authorization: token,
-    },
-  }).then((response) => {
-    return response.json();
-  });
-}
-
-export function addTodo({ text, token }) {
-  return fetch(host, {
+export function addPost({ token, text, imageUrl }) {
+  return fetch(commentsHost + "/comments", {
     method: "POST",
     body: JSON.stringify({
       text,
@@ -168,7 +133,30 @@ export function addTodo({ text, token }) {
       Authorization: token,
     },
   }).then((response) => {
-    return response.json();
+    if (response.status === 500) {
+      throw new Error("Ошибка сервера");
+    }
+
+    if (response.status === 400) {
+      throw new Error("Неверный запрос");
+    }
+  });
+}
+
+export function toogleLike({ id, token }) {
+  return fetch(commentsHost + "/comments/" + id + "/toggle-like", {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  }).then((response) => {
+    if (response.status === 500) {
+      throw new Error("Ошибка сервера");
+    }
+
+    if (response.status === 400) {
+      throw new Error("Неверный запрос");
+    }
   });
 }
 
