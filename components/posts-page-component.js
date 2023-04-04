@@ -28,9 +28,11 @@ export function renderPostsPageComponent({ appEl, singleUserView }) {
               <p class="post-likes-text">
                 Нравится: ${
                   post.likes.length < 2
-                    ? `<strong>${post.likes
-                        .map(({ name }) => name)
-                        .join(", ")}</strong>`
+                    ? `<strong>${
+                        post.likes.length === 0
+                          ? "0"
+                          : post.likes.map(({ name }) => name).join(", ")
+                      }</strong>`
                     : `<strong>${
                         post.likes[
                           Math.floor(Math.random() * post.likes.length)
