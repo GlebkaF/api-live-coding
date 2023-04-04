@@ -9,16 +9,16 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
       ${
         imageUrl
           ? `
-          <div style="display:flex; align-items: center;">
-            <img style="width: 100px; height: 100px; object-fit: cover; margin-right: 5px" src="${imageUrl}">
-            <button class="remove-image button">Удалить</button>
+          <div class="file-upload-image-conrainer">
+            <img class="file-upload-image" src="${imageUrl}">
+            <button class="file-upload-remove-button button">Заменить фото</button>
           </div>
           `
           : `
-            <label class="file-upload-label button" style="display: inline-block;">
+            <label class="file-upload-label secondary-button">
                 <input
                   type="file"
-                  class="image-input"
+                  class="file-upload-input"
                   style="display:none"
                 />
                 Выберите фото
@@ -29,7 +29,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
   </div>
 `;
 
-    const fileInputElement = element.querySelector(".image-input");
+    const fileInputElement = element.querySelector(".file-upload-input");
 
     fileInputElement?.addEventListener("change", () => {
       const file = fileInputElement.files[0];
@@ -45,11 +45,13 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
       }
     });
 
-    element.querySelector(".remove-image")?.addEventListener("click", () => {
-      imageUrl = "";
-      onImageUrlChange(imageUrl);
-      render();
-    });
+    element
+      .querySelector(".file-upload-remove-button")
+      ?.addEventListener("click", () => {
+        imageUrl = "";
+        onImageUrlChange(imageUrl);
+        render();
+      });
   };
 
   render();

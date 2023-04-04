@@ -1,4 +1,3 @@
-import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 
 export function renderLoadingPageComponent({ appEl, user, goToPage }) {

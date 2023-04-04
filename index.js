@@ -10,27 +10,23 @@ import {
 } from "./routes.js";
 import { renderPostsPageComponent } from "./components/posts-page-component.js";
 import { renderLoadingPageComponent } from "./components/loading-page-component.js";
+import {
+  getUserFromLocalStorage,
+  removeUserFromLocalStorage,
+  saveUserToLocalStorage,
+} from "./helpers.js";
 
-let user = null;
+export let user = getUserFromLocalStorage();
 
-// user = {
-//   _id: "6421860c32e0301869fb3301",
-//   login: "admin",
-//   name: "Глеб Админ",
-//   password: "admin",
-//   token: "asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k",
-// };
-
-let page = POSTS_PAGE;
-let posts = [];
+export let page = null;
+export let posts = [];
 
 const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
 
-const toggleUserLike = ({ postId }) => {
-  console.log({ postId });
+export const toggleUserLike = ({ postId }) => {
   toogleLike({ token: getToken(), id: postId }).then(() => {
     const index = posts.findIndex((post) => post.id === postId);
     if (index !== -1) {
@@ -46,7 +42,13 @@ const toggleUserLike = ({ postId }) => {
   });
 };
 
-const goToPage = (newPage, data) => {
+export const logout = () => {
+  user = null;
+  removeUserFromLocalStorage();
+  goToPage(POSTS_PAGE);
+};
+
+export const goToPage = (newPage, data) => {
   if (
     [
       POSTS_PAGE,
@@ -114,6 +116,7 @@ const renderApp = () => {
       appEl,
       setUser: (newUser) => {
         user = newUser;
+        saveUserToLocalStorage(user);
         goToPage(POSTS_PAGE);
       },
       user,
@@ -169,4 +172,4 @@ const renderApp = () => {
   }
 };
 
-goToPage(ADD_POSTS_PAGE);
+goToPage(POSTS_PAGE);

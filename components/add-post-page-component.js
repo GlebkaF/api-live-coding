@@ -9,20 +9,15 @@ export function renderAddPostPageComponent({ appEl, user, goToPage, addPost }) {
     <div class="page-container">
       <div class="header-container"></div>
       <div class="form">
-        <h3 class="form-title">Форма добавления</h3>
-        <div class="form-row">
-            Что нужно сделать:
-            <input
-            type="text"
-            id="text-input"
-            class="input"
-            placeholder="Выпить кофе"
-            />
+        <h3 class="form-title">Создать пост</h3>
+        <div class="form-inputs">
+          <div class="upload-image-container"></div>
+          <label>
+            Опишите фотографию:
+            <textarea class="input textarea" rows="4"></textarea>
+            </label>
+            <button class="button"  id="add-button">Добавить</button>
         </div>
-        
-        <div class="upload-image-container"></div>
-        
-        <button class="button"  id="add-button">Добавить</button>
       </div>
     </div>
   `;
@@ -31,8 +26,6 @@ export function renderAddPostPageComponent({ appEl, user, goToPage, addPost }) {
 
     renderHeaderComponent({
       element: appEl.querySelector(".header-container"),
-      user,
-      goToPage,
     });
 
     renderUploadImageComponent({
@@ -45,7 +38,7 @@ export function renderAddPostPageComponent({ appEl, user, goToPage, addPost }) {
     document
       .getElementById("add-button")
       .addEventListener("click", async () => {
-        const textInputElement = document.getElementById("text-input");
+        const textInputElement = document.querySelector("textarea");
 
         if (!imageUrl) {
           alert("Не указано фото");

@@ -1,14 +1,8 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
+import { posts, goToPage, toggleUserLike, user } from "../index.js";
 
-export function renderPostsPageComponent({
-  appEl,
-  posts,
-  user,
-  goToPage,
-  singleUserView,
-  toggleLike,
-}) {
+export function renderPostsPageComponent({ appEl, singleUserView }) {
   const tasksHtml = posts
     .map((post) => {
       return `
@@ -73,9 +67,7 @@ export function renderPostsPageComponent({
   appEl.innerHTML = appHtml;
 
   renderHeaderComponent({
-    user,
     element: document.querySelector(".header-container"),
-    goToPage,
   });
 
   for (let userEl of document.querySelectorAll(".post-header")) {
@@ -88,7 +80,11 @@ export function renderPostsPageComponent({
 
   for (let likeEl of document.querySelectorAll(".like-button")) {
     likeEl.addEventListener("click", () => {
-      toggleLike({ postId: likeEl.dataset.postId });
+      if (!user) {
+        alert("Лайкать посты могут только автризованные пользователи");
+        return;
+      }
+      toggleUserLike({ postId: likeEl.dataset.postId });
     });
   }
 }
