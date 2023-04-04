@@ -26,12 +26,24 @@ export function renderPostsPageComponent({ appEl, singleUserView }) {
         post.isLiked ? "-active" : ""
       }"> Лайк </button>
               <p class="post-likes-text">
-                Нравится: ${post.likes}
+                Нравится: ${
+                  post.likes.length < 2
+                    ? `<strong>${post.likes
+                        .map(({ name }) => name)
+                        .join(", ")}</strong>`
+                    : `<strong>${
+                        post.likes[
+                          Math.floor(Math.random() * post.likes.length)
+                        ].name
+                      }</strong> и <strong>еще ${(
+                        post.likes.length - 1
+                      ).toString()}</strong>`
+                }
               </p>
             </div>
             <p class="post-text">
               <span class="user-name">${post.user.name}</span>
-              ${post.text}
+              ${post.description}
             </p>
             <p class="post-date">
               ${new Date(post.createdAt).toLocaleString()}

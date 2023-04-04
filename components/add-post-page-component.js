@@ -1,7 +1,7 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
-export function renderAddPostPageComponent({ appEl, user, goToPage, addPost }) {
+export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   let imageUrl = "";
 
   const render = () => {
@@ -50,8 +50,8 @@ export function renderAddPostPageComponent({ appEl, user, goToPage, addPost }) {
           return;
         }
 
-        addPost({
-          text: textInputElement.value,
+        onAddPostClick({
+          description: textInputElement.value,
           imageUrl,
         });
       });

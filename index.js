@@ -1,4 +1,4 @@
-import { addPost, getPosts, getUserPosts, toogleLike } from "./api.js";
+import { addPost, dislike, getPosts, getUserPosts, like } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -27,19 +27,21 @@ const getToken = () => {
 };
 
 export const toggleUserLike = ({ postId }) => {
-  toogleLike({ token: getToken(), id: postId }).then(() => {
-    const index = posts.findIndex((post) => post.id === postId);
-    if (index !== -1) {
-      if (posts[index].isLiked) {
-        posts[index].likes -= 1;
-      } else {
-        posts[index].likes += 1;
-      }
+  const index = posts.findIndex((post) => post.id === postId);
 
-      posts[index].isLiked = !posts[index].isLiked;
+  if (posts[index].isLiked) {
+    dislike({ token: getToken(), id: postId }).then((updatedPost) => {
+      posts[index].likes = updatedPost.post.likes;
+      posts[index].isLiked = false;
       renderApp();
-    }
-  });
+    });
+  } else {
+    like({ token: getToken(), id: postId }).then((updatedPost) => {
+      posts[index].likes = updatedPost.post.likes;
+      posts[index].isLiked = true;
+      renderApp();
+    });
+  }
 };
 
 export const logout = () => {
@@ -75,7 +77,7 @@ export const goToPage = (newPage, data) => {
         })
         .catch((error) => {
           console.error(error);
-          goToPage(POSTS_PAGE);
+          // goToPage(POSTS_PAGE);
         });
     }
 
@@ -129,12 +131,12 @@ const renderApp = () => {
       appEl,
       user,
       goToPage,
-      addPost({ text, imageUrl }) {
+      onAddPostClick({ description, imageUrl }) {
         goToPage(LOADING_PAGE);
 
         addPost({
           token: getToken(),
-          text,
+          description,
           imageUrl,
         })
           .then(() => {
