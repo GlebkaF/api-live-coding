@@ -15,8 +15,8 @@ export function renderAuthPageComponent({ appEl, setUser, user, goToPage }) {
               <h3 class="form-title">
                 ${
                   isLoginMode
-                    ? "Войти в&nbsp;Instapro"
-                    : "Зарегистрироваться в&nbsp;Instapro"
+                    ? "Вход в&nbsp;Instapro"
+                    : "Регистрация в&nbsp;Instapro"
                 }
                 </h3>
               <div class="form-inputs">
@@ -43,10 +43,11 @@ export function renderAuthPageComponent({ appEl, setUser, user, goToPage }) {
               <div class="form-footer">
                 <p class="form-footer-title">
                   ${isLoginMode ? "Нет аккаунта?" : "Уже есть аккаунт?"}
+                  <button class="link-button" id="toggle-button">
+                    ${isLoginMode ? "Зарегистрироваться." : "Войти."}
+                  </button>
                 </p> 
-                <button class="secondary-button" id="toggle-button">
-                  Перейти ${isLoginMode ? "к регистрации" : "ко входу"}
-                </button>
+               
               </div>
           </div>
       </div>    
