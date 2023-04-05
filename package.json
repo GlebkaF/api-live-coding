@@ -1,0 +1,27 @@
+{
+  "name": "api-live-coding",
+  "version": "1.0.0",
+  "description": "Приложение доступно по адресу https://glebkaf.github.io/api-live-coding/",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GlebkaF/api-live-coding.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GlebkaF/api-live-coding/issues"
+  },
+  "homepage": "https://github.com/GlebkaF/api-live-coding#readme",
+  "devDependencies": {
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "date-fns": "^2.29.3"
+  }
+}

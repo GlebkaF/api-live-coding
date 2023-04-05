@@ -1,6 +1,8 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, toggleUserLike, user } from "../index.js";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { ru } from "date-fns/locale";
 
 export function renderPostsPageComponent({ appEl, singleUserView }) {
   const tasksHtml = posts
@@ -52,7 +54,10 @@ export function renderPostsPageComponent({ appEl, singleUserView }) {
               ${post.description}
             </p>
             <p class="post-date">
-              ${new Date(post.createdAt).toLocaleString()}
+              ${formatDistanceToNow(new Date(post.createdAt), {
+                locale: ru,
+                addSuffix: "назад",
+              })} 
             </p>
           </li>`;
     })

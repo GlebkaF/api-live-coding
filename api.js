@@ -1,6 +1,6 @@
 // const baseHost = "http://localhost:3000";
 const baseHost = "https://webdev-hw-api.vercel.app";
-const postsHost = baseHost + "/api/v1/gleb-fo3kin/instapro";
+const postsHost = baseHost + "/api/v1/prod/instapro";
 
 export function getPosts({ token }) {
   return fetch(postsHost, {
