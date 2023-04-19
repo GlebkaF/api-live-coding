@@ -1,4 +1,11 @@
-import { addPost, dislike, getPosts, getUserPosts, like } from "./api.js";
+import {
+  addPost,
+  deletePost,
+  dislike,
+  getPosts,
+  getUserPosts,
+  like,
+} from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -42,6 +49,15 @@ export const toggleUserLike = ({ postId }) => {
       renderApp();
     });
   }
+};
+
+export const deleteUserPost = ({ postId }) => {
+  deletePost({
+    id: postId,
+    token: getToken(),
+  }).then(() => {
+    goToPage(POSTS_PAGE);
+  });
 };
 
 export const logout = () => {
